@@ -1,0 +1,215 @@
+public class Person {
+
+	private String name;
+	private String id;
+
+	public Person(String name) {
+		super();
+		this.name = name;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Person [name=" + name + "]";
+	}
+
+}
+
+public class Faculty extends Person{
+	private String name;
+	private String id;
+	private double salary;
+
+	public Faculty(String name, double gpa) {
+		super(name);
+		this.name = name;
+		this.salary = gpa;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double gpa) {
+		this.salary = gpa;
+	}
+
+	@Override
+	public String toString() {
+		return "Faculty [name=" + name + ", id=" + id + ", salary=" + salary + "]";
+	}
+
+}
+
+public class Student extends Person {
+
+	private String name;
+	private String id;
+	private double gpa;
+
+	public Student(String name, double gpa) {
+		super(name);
+		this.name = name;
+		this.gpa = gpa;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public double getGpa() {
+		return gpa;
+	}
+
+	public void setGpa(double gpa) {
+		this.gpa = gpa;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [name=" + name + ", id=" + id + ", gpa=" + gpa + "]";
+	}
+
+}
+
+public class GBag <T extends Person>{
+	private T[] array;
+	private int nElems;
+	private int idcount = 1;
+	
+	
+	public GBag(int maxSize) {
+		array = (T[]) new Person[maxSize];
+		nElems = 0;
+	}
+
+	public void store(T value) {
+		value.setId(Integer.toString(idcount++));
+		array[nElems++] = value;
+	}
+
+	public boolean delete(String value) {
+		boolean found = false;
+		for (int i = 0; i < nElems; i++) {
+			if (array[i].getId().equals(value)) {
+				found = true;
+				for (int j = i; j < nElems - 1; j++) {
+					array[j] = array[j + 1];
+				}
+				nElems--;
+				return found;
+			}
+		}
+		return found;
+	}
+
+	public boolean find(String value) {
+		boolean found = false;
+		for (int i = 0; i < nElems; i++) {
+			if (array[i].getId().equals(value)) {
+				found = true;
+			}
+		}
+		return found;
+	}
+
+	public T displayById(String value) {
+		for (int i = 0; i < nElems; i++) {
+		if (array[i].getId().equals(value)) {
+				return array[i];
+		}
+		}
+		System.out.println("No one of that id");
+		return null;
+	}
+	
+	public void display() {
+		for (int i = 0; i < nElems; i++) {
+			System.out.println(array[i]);
+		}
+	}
+}
+
+public class Demo {
+
+	public static void main(String[] args) {
+		GBag classroom = new GBag(10);
+		
+		Student s1 = new Student("Bob", 3.0);
+		Student s2 = new Student("John", 3.5);
+		Student s3 = new Student("Mary", 3.2);
+		Student s4 = new Student("Lauren", 4.0);
+		Student s5 = new Student("Andrew", 3.7);
+
+		Faculty f1 = new Faculty("Dr.Smith", 500);
+		Faculty f2 = new Faculty("Dr.Jenkin", 750);
+		Faculty f3 = new Faculty("Dr.House", 1000);
+		Faculty f4 = new Faculty("Dr.Ninja", 1250);
+		Faculty f5 = new Faculty("Dr.Docter", 1500);
+		
+		classroom.store(s1);
+		classroom.store(s2);
+		classroom.store(s3);
+		classroom.store(s4);
+		classroom.store(s5);
+		classroom.store(f1);
+		classroom.store(f2);
+		classroom.store(f3);
+		classroom.store(f4);
+		classroom.store(f5);
+		
+		System.out.println(classroom.find("7"));
+		System.out.println(classroom.displayById("7"));
+		
+		System.out.println(classroom.find("3"));
+		System.out.println(classroom.displayById("3"));
+		
+		System.out.println(classroom.delete("7"));
+		System.out.println(classroom.find("7"));
+	}
+
+}
