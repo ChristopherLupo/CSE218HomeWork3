@@ -1,0 +1,69 @@
+public class GBag <T>{
+	private T[] array;
+	private int nElems;
+
+	public GBag(int maxSize) {
+		array = (T[]) new Object[maxSize];
+		nElems = 0;
+	}
+
+	public void store(T value) {
+		array[nElems++] = value;
+	}
+
+	public boolean delete(T value) {
+		boolean found = false;
+		for (int i = 0; i < nElems; i++) {
+			if (array[i] == value) {
+				found = true;
+				for (int j = i; j < nElems - 1; j++) {
+					array[j] = array[j + 1];
+				}
+				nElems--;
+				return found;
+			}
+		}
+		return found;
+	}
+
+	public boolean find(T value) {
+		boolean found = false;
+		for (int i = 0; i < nElems; i++) {
+			if (array[i] == value) {
+				found = true;
+			}
+		}
+		return found;
+	}
+
+	public void display() {
+		for (int i = 0; i < nElems; i++) {
+			System.out.println(array[i] + " ");
+		}
+	}
+}
+
+public class Demo {
+
+	public static void main(String[] args) {
+
+		GBag<Integer> bag1 = new GBag<>(10);
+
+		bag1.store(1);
+		bag1.store(2);
+		bag1.store(3);
+
+		System.out.println(bag1.find(1));
+		System.out.println(bag1.delete(1));
+
+		GBag<String> bag2 = new GBag<>(10);
+
+		bag2.store("A");
+		bag2.store("B");
+		bag2.store("C");
+
+		bag1.display();
+		bag2.display();
+	}
+
+}
