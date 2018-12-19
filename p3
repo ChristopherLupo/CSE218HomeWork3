@@ -1,0 +1,76 @@
+public class GStack<T> {
+	private int maxSize;
+	private T[] stackArray;
+	private int top;
+
+	public GStack(int maxSize) {
+		this.maxSize = maxSize;
+
+		stackArray = (T[]) new Object[maxSize];
+
+		top = -1;
+	}
+
+	public void push(T value) {
+		stackArray[++top] = value;
+	}
+
+	public void pushAll(Object value[]) {
+		int index = value.length;
+
+		for (int i = 0; i < index; i++) {
+			stackArray[++top] = (T) value[i];
+		}
+
+	}
+
+	public Object[] popAll() {
+		Object[] popped = new Object[top + 1];
+		int index = 0;
+		
+		while(top != -1){
+			popped[index++] = stackArray[top--];
+		}
+		
+		return popped;
+	}
+
+	public T pop() {
+		return stackArray[top--];
+	}
+
+	public T peek() {
+		return stackArray[top];
+	}
+
+	public boolean isEmpty() {
+		return top == -1;
+	}
+
+	public boolean isFull() {
+		return top == maxSize - 1;
+	}
+
+}
+
+public class Demo {
+
+	public static void main(String[] args) {
+	 
+		GStack type = new GStack(10);
+		
+		type.push(3);
+		type.push("HI");
+		
+		Object [] num = {10,20.1,'c'};
+		
+		type.pushAll(num);
+	
+		Object [] array = type.popAll();
+		
+		for(int i = 0; i < array.length; i++){
+			System.out.println(array[i]);
+		}
+	}
+
+}
